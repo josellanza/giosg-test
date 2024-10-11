@@ -9,17 +9,21 @@ interface ProjectFormProps {
   handleAddProject: () => void
 }
 
-const ProjectForm = (props:ProjectFormProps) => {
+const ProjectForm: React.FC<ProjectFormProps> = ({ newProject, setNewProject, handleAddProject }) => {
   const [open, setOpen] = useState(false);
-  const { newProject, setNewProject, handleAddProject } = { ...props }
+  const [valid, setValid] = useState(true);
 
-  const showModal = () => {
-    setOpen(true);
-  };
+  const showModal = () => setOpen(true);
 
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const handleCancel = () => setOpen(false);
+
+  const validateData = (newProject:Project) =>
+    newProject.name && newProject.url
+      ? (
+        setValid(true),
+        handleAddProject(),
+        setOpen(false)
+      ) : setValid(false)
 
   return (
     <div className={styles.mainContainer}>
@@ -31,20 +35,20 @@ const ProjectForm = (props:ProjectFormProps) => {
         open={open}
         onCancel={handleCancel}
         onOk={() => {
-          handleAddProject();
-          setOpen(false);
+          validateData(newProject)
         }}
       >
         <div>
           <Input
+            status={valid ? undefined: "error"}
             className={styles.input}
-
             type="text"
             placeholder="Project Name"
             value={newProject.name}
             onChange={e => setNewProject({ ...newProject, name: e.target.value })}
           />
           <Input
+            status={valid ? undefined: "error"}
             className={styles.input}
             type="url"
             placeholder="Project URL"

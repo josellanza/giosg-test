@@ -5,3 +5,15 @@
 .input {
   margin: 10px
 }
+
+@media (max-width: 768px) {
+  .mainContainer {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .input {
+    margin: 5px
+  }
+}

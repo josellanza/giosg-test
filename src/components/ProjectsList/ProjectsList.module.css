@@ -8,6 +8,36 @@
   padding: 5%;
 }
 
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
 .btn {
   margin: 5px;
+}
+
+@media (max-width: 768px) {
+  .mainContainer {
+    padding: 10px;
+  }
+
+  .gridContainer {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .sortBtn {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+  }
 }

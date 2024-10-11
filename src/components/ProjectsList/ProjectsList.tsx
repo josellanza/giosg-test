@@ -73,7 +73,7 @@ const ProjectsList = () => {
     }
   ];
 
-  const colors = ["#cbdbf5", "#ccf0cf", "#f7dfd2", "#a9a9ab", "#f6c6f7"];
+  const colors = ["#cbdbf5", "#ccf0cf", "#f7dfd2", "#d4d4d6", "#f6c6f7"];
   const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)]
 
   const [projects, setProjects] = useState<Project[]>(() => {
@@ -92,19 +92,17 @@ const ProjectsList = () => {
     rating: 1,
     created_at: ""
   });
-  const [open, setOpen] = useState(false);
-
 
   useEffect(() => {
     localStorage.setItem("projects", JSON.stringify(projects))
   },[])
 
-  const sortProjects = (a:any, b:any) => {
+  const sortProjects = (a:Project, b:Project) => {
     const isAsc = sortType.order === "asc";
     if (sortType.type === "rating") {
       return isAsc ? a.rating - b.rating : b.rating - a.rating;
     } else {
-      return isAsc ? a.created_at - b.created_at : b.created_at - a.created_at;
+      return isAsc ? new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf() : new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf();
     }
   };
 
@@ -155,7 +153,7 @@ const ProjectsList = () => {
         </Button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
+      <div className={styles.gridContainer}>
         {projects.sort(sortProjects).map(project => (
           <ProjectCard
             project={project}

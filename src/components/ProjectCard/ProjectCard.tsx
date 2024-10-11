@@ -7,26 +7,29 @@ interface ProjectProps {
   handleRemoveProject: (id:string) => void
 }
 
-const ProjectCard = (props: ProjectProps) => {
-  const project:Project = props.project
+const ProjectCard: React.FC<ProjectProps> = ({ project, handleRemoveProject }) => {
   return (
-    <a className={styles.cardGrid} href={project.url}>
+    <div className={styles.cardGrid}>
       <div
         className={styles.cardContainer}
         style={{backgroundColor: project.color}}
       >
         <div>
         <button
-          onClick={() => props.handleRemoveProject(project.id)}
+          onClick={() => handleRemoveProject(project.id)}
           className={styles.btn}
         >
           ✘
         </button>
-          <h2>{project.name}</h2>
+        <a className={styles.name} href={project.url}>
+          <h2>
+            {project.name}
+          </h2>
+        </a >
           <div>{Array(project.rating).fill("⭐️")}</div>
         </div>
       </div>
-    </a>     
+    </div>     
   );
 };
 
